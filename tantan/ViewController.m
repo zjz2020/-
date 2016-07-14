@@ -82,7 +82,7 @@
 }
 - (void)alartWithString:(NSString *)string{
     UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"注意" message:string preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
     [alertC addAction:action];
     [self presentViewController:alertC animated:YES completion:nil];
 }
