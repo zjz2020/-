@@ -19,7 +19,7 @@
     self.RandomImageName = @"22";
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 40, 375, 40);
-    button.backgroundColor = [UIColor cyanColor];
+    button.backgroundColor = [UIColor redColor];
     [button addTarget:self action:@selector(didClickTheContacts:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     // Do any additional setup after loading the view.
@@ -33,6 +33,7 @@
 }
 #pragma mark CNContactPickerDelegate
 - (void)contactPicker:(CNContactPickerViewController *)picker didSelectContact:(CNContact *)contact{
+    NSLog(@"%@",contact);
     NSString *firstName = contact.familyName;
     NSString *lastName = contact.givenName;
     NSLog(@"%@--%@",lastName,firstName);
@@ -41,7 +42,8 @@
         CNPhoneNumber *value = labelV.value;
         NSString *phoneValue = value.stringValue;
         NSString *phoneLabel = labelV.label;
-        NSLog(@"%@__%@",phoneLabel,phoneValue);
+        [self teleleWithPhoNum:phoneValue];
+        NSLog(@"%@_电话:_%@",phoneLabel,phoneValue);
     }
 }
 - (void)contactPickerDidCancel:(CNContactPickerViewController *)picker{
@@ -51,7 +53,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)alartWithString:(NSString *)string{
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"注意" message:string preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+    [alertC addAction:action];
+    [self presentViewController:alertC animated:YES completion:nil];
+}
+//拨打电话操作
+- (void)teleleWithPhoNum:(NSString *)phoNum{
+    UIWebView *webV = [[UIWebView alloc] init];
+    NSURL *telUrl = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phoNum]];
+    [webV loadRequest:[NSURLRequest requestWithURL:telUrl]];
+    [self.view addSubview:webV];
+}
 /*
 #pragma mark - Navigation
 
